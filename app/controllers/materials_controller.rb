@@ -1,17 +1,14 @@
 class MaterialsController < ApplicationController
 	before_action :set_material, only: [:destroy]
 
-	def index 
+	def index
 		@materials = Material.all
 
 		render json: @materials
 	end
 
 	def create
-		@course = Course.find(params[:course_id])
-
 		@material = Material.new(material_params)
-		@material.course = @course
 
 		if @material.save
 			render json: @material, status: :created
@@ -31,7 +28,7 @@ class MaterialsController < ApplicationController
 	end
 
 	def material_params
-		params.permit(:name, :material_type)
+		params.permit(:name, :material_type, :price, :course_id)
 	end
 
 end
