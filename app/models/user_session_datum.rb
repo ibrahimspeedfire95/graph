@@ -1,0 +1,2 @@
+class UserSessionDatum < ApplicationRecord
+end

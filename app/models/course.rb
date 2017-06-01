@@ -8,5 +8,14 @@ class Course < ApplicationRecord
 	validates :name, presence: true, length: { minimum: 5 }
 	validates :tutor_name, presence: true
 
+	belongs_to :student
+
 	has_many :materials, dependent: :destroy
+
+	def self.as_json_full_courses courses
+		courses.map { |course|
+			data = course.as_json
+			data.merge!({ 'materials' => course.materials })
+		}
+	end
 end

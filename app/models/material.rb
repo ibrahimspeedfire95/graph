@@ -22,4 +22,5 @@ class Material < ApplicationRecord
     def hello
         self.name = "hellssssss"
     end
+
 end
