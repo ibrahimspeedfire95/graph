@@ -17,10 +17,5 @@ class Material < ApplicationRecord
 
     belongs_to :course
 
-    before_save :hello, unless: Proc.new { |material| material.name == 'z' }
-
-    def hello
-        self.name = "hellssssss"
-    end
 
 end

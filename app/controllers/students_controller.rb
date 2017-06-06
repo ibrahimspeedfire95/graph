@@ -10,7 +10,8 @@ class StudentsController < ApplicationController
 
   # GET /students/1
   def show
-    render json: @student.as_json_full_student
+    response = @student.as_json_full_student
+    render json: response
   end
 
   # POST /students

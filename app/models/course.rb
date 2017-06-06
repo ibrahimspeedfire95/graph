@@ -13,9 +13,18 @@ class Course < ApplicationRecord
 	has_many :materials, dependent: :destroy
 
 	def self.as_json_full_courses courses
+		# x = [5,2,3,7]
+		# Course.where(id: x).includes(:materials).sort_by {|a| x.index(a.id)}
+		courses = courses.includes(:materials)
 		courses.map { |course|
-			data = course.as_json
-			data.merge!({ 'materials' => course.materials })
+			data = course.as_json_full_courses
 		}
+	end
+
+	def as_json_full_courses
+		data = self.as_json
+		data.merge!({ 'materials' => self.materials })
+
+		return data
 	end
 end
