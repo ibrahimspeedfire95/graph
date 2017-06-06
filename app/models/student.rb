@@ -11,7 +11,8 @@ class Student < ApplicationRecord
 
 	def as_json_full_student
 		data = self.as_json
-		data.merge!({ 'courses' => Course.as_json_full_courses(self.courses) })
+		data[:courses] = Course.as_json_full_courses(self.courses)
+		# data.merge!({ 'courses' => Course.as_json_full_courses(self.courses) })
 		data.merge!({ 'materials': self.materials })
 		return data
 	end

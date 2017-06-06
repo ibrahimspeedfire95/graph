@@ -3,7 +3,8 @@ class SessionsController < ApplicationController
 	def create
 		student = Student.find_by(email: params[:email])
 		if !student || !student.authenticate(params[:password])
-			render json: { errors: "Invalid email or password." }, status: 400 and return
+			render json: { errors: "Invalid email or password." }, status: 400
+			return
 		end
 
 		userSessionData = UserSessionDatum.new(student_id: student.id, notifications_token: user_session_params[:notifications_token], platform: user_session_params[:platform])
@@ -11,12 +12,12 @@ class SessionsController < ApplicationController
 			render json: payload(student, userSessionData)
 		else
 			render json: { errors: userSessionData.errors.full_messages.join("and") }, status: 400
-		end		
+		end
 	end
 
 	private
   def payload(student)
-    return nil unless student and student.id
+    return nil unless student && student.id
     {
       auth_token: JsonWebToken.encode({student_id: student.id}),
       user: {id: student.id, email: student.email}
@@ -28,7 +29,7 @@ class SessionsController < ApplicationController
     data = {
       auth_token:  "Bearer " + JsonWebToken.encode({ student_id: student.id, user_session_datum_id: user_session_datum.id })
     }
-    data.merge({ "student" => student })
+    data.merge({ student: student })
   end
 
   def user_session_params

@@ -35,13 +35,25 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1
   def destroy
-    @course.destroy
+    begin
+      if @course.destroy
+      else
+      end
+    rescue => e
+      render json: not found
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
-      @course = Course.find(params[:id])
+      begin
+        @course = Course.find(params[:id])
+      rescue ActiveRecord::NotFound => e
+        render json: not found
+      rescue => e
+        render json: general error
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

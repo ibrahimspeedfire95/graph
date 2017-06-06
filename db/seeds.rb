@@ -6,9 +6,36 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-course = Course.new(name: 'database', tutor_name: 'absd')
-course.save
+student = Student.new(name: 'ibrahim', password: 'ibrahim', email: 'ibrahim@gmail.com')
+student.save
 
-m1 = Material.new(name: 'intro', material_type: 'video', price: 15)
-m1.course = course
-m1.save
+course1 = Course.new(name: 'Database', tutor_name: 'absd')
+course1.student = student
+course1.save
+
+course2 = Course.new(name: 'Math', tutor_name: 'absd')
+course2.student = student
+course2.save(validate: false)
+
+course3 = Course.new(name: 'Introduction to CS', tutor_name: 'absd')
+course3.student = student
+course3.save
+
+
+(0..10).each do |i|
+  m = Material.new(name: "Database #{i}", material_type: 'video', price: '15')
+  m.course = course1
+  m.save
+end
+
+(0..10).each do |i|
+  m = Material.new(name: "Math #{i}", material_type: 'video', price: '15')
+  m.course = course2
+  m.save
+end
+
+(0..10).each do |i|
+  m = Material.new(name: "Introduction #{i}", material_type: 'video', price: '15')
+  m.course = course3
+  m.save
+end
